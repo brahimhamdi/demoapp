@@ -1,4 +1,4 @@
 template: Bonjour, %s!
-defaultName: KANOMA
+defaultName: DSI3
 server:
   rootPath: /api/
