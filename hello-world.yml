@@ -1,4 +1,4 @@
 template: Bonjour, %s!
-defaultName: DSI3
+defaultName: INRAE
 server:
   rootPath: /api/
