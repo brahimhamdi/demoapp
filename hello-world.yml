@@ -1,4 +1,4 @@
 template: Bonjour, %s!
-defaultName: INRAE
+defaultName: Sofrecom
 server:
   rootPath: /api/
