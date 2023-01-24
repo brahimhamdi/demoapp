@@ -1,4 +1,4 @@
 template: Bonjour, %s!
-defaultName: Sofrecom
+defaultName: ALTEN
 server:
   rootPath: /api/
