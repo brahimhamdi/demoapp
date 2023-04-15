@@ -1,0 +1,47 @@
+pipeline {
+agent any
+tools {
+maven "M3"
+//dockerTool "docker"
+'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
+}
+environment {
+img = ''
+registryCredential='dockerhub'
+}
+stages {
+stage('GitClone') {
+steps {
+// Get some code from a GitHub repository
+git 'https://github.com/brahimhamdi/demoapp'
+}
+}
+stage('Build') {
+steps {
+sh "mvn -Dmaven.test.failure.ignore=true clean package"
+}
+post {
+success {
+junit '**/target/surefire-reports/TEST-*.xml'
+archiveArtifacts 'target/*.jar'
+}
+}
+}
+stage('BuildImgDocker') {
+steps {
+script {
+img = docker.build("brahimhamdi/demoapp:${env.BUILD_ID}")
+}
+}
+}
+stage('TestImgDocker') {
+steps {
+script {
+sh "docker run -d --rm --name demoapp-test -p 8000:8080 brahimhamdi/demoapp:${env.BUILD_ID}"
+sh "sleep 60"
+sh "docker stop demoapp-test"
+}
+}
+}
+}
+}
